@@ -1,17 +1,10 @@
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
-import { Inter, Poppins } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
+const roboto = Roboto({
   subsets: ["latin"],
-  variable: "--font-inter",
-});
-
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "600", "700"],
-  variable: "--font-poppins",
 });
 
 export const metadata: Metadata = {
@@ -25,8 +18,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn(inter.variable, poppins.variable)}>
-      <body className="antialiased">{children}</body>
+    <html lang="en" className={cn(roboto.className, "antialiased")}>
+      <body>{children}</body>
     </html>
   );
 }
