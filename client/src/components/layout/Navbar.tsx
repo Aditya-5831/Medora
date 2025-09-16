@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { DollarSign, Home, Info, Mail, Star } from "lucide-react";
+import { ArrowRight, DollarSign, Home, Info, Mail, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -43,7 +43,7 @@ const Navbar = () => {
       {/* LOGO */}
       <div className="flex items-center gap-1">
         <Image src={"/logo.svg"} width={25} height={25} alt="logo" />
-        <span className="hidden sm:block font-bold font-heading">MEDORA</span>
+        <span className="hidden sm:block font-bold">MEDORA</span>
       </div>
 
       {/* DESKTOP LINKS */}
@@ -52,7 +52,12 @@ const Navbar = () => {
           <Link
             key={link.href}
             href={"/"}
-            className="font-medium text-sm text-gray-700 hover:text-black transition-colors"
+            className={cn(
+              "font-medium text-sm text-gray-700 hover:text-primary transition-colors",
+              {
+                "text-primary font-bold": pathname === link.href,
+              },
+            )}
           >
             {link.name}
           </Link>
@@ -62,17 +67,27 @@ const Navbar = () => {
       {/* BUTTONS SECTION */}
       <div className="hidden md:flex items-center gap-3">
         <Link
-          href={"/sign-in"}
-          className={buttonVariants({ variant: "ghost" })}
-        >
-          Sign in
-        </Link>
-        <div className="h-8 w-px bg-gray-200" />
-        <Link
           href={"/sign-up"}
-          className={buttonVariants({ variant: "default" })}
+          className={buttonVariants({
+            size: "sm",
+            className: "text-xs group",
+          })}
         >
           Sign up
+          <ArrowRight className="size-4 group-hover:translate-x-1 transition-all duration-200" />
+        </Link>
+
+        <div className="h-8 w-px bg-gray-200" />
+
+        <Link
+          href={"/sign-up"}
+          className={buttonVariants({
+            size: "sm",
+            className: "text-xs",
+            variant: "ghost",
+          })}
+        >
+          Sign in
         </Link>
       </div>
 
@@ -98,9 +113,13 @@ const Navbar = () => {
       <div className="sm:hidden items-center gap-3">
         <Link
           href={"/sign-up"}
-          className={buttonVariants({ variant: "default" })}
+          className={buttonVariants({
+            size: "sm",
+            className: "text-xs group",
+          })}
         >
           Sign up
+          <ArrowRight className="size-4 group-hover:translate-x-1 transition-all duration-200" />
         </Link>
       </div>
     </nav>
