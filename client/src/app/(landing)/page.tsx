@@ -1,4 +1,5 @@
 import Features from "@/components/landing/Features";
+import HowItWorks from "@/components/landing/HowItWorks";
 import MockDashboardUI from "@/components/landing/MockDashboardUI";
 import Navbar from "@/components/layout/Navbar";
 import { buttonVariants } from "@/components/ui/button";
@@ -37,9 +38,11 @@ const LandingPage = () => {
 
       {/* FEATURES */}
       <Features />
+
+      {/* HOW IT WORKS */}
+      <HowItWorks />
     </div>
   );
 };
 
 export default LandingPage;
-// bg-[#051237]
