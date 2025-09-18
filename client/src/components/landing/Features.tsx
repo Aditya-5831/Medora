@@ -40,7 +40,7 @@ const Features = () => {
           {FEATURES.map(({ title, icon: Icon, description }) => (
             <div
               key={title}
-              className="flex max-h-[260px] max-w-[340px] flex-col gap-5 rounded-xl py-4 pr-9 pl-4 shadow-md ring-1 ring-gray-950/10"
+              className="flex max-w-[340px] flex-col gap-5 rounded-xl py-4 pr-9 pl-4 shadow-md ring-1 ring-gray-950/10"
             >
               <div className="border-primary/10 w-fit rounded-lg border p-3">
                 <Icon className="text-primary size-5" />
