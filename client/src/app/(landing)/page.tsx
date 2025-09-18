@@ -1,3 +1,4 @@
+import Features from "@/components/landing/Features";
 import MockDashboardUI from "@/components/landing/MockDashboardUI";
 import Navbar from "@/components/layout/Navbar";
 import { buttonVariants } from "@/components/ui/button";
@@ -33,6 +34,9 @@ const LandingPage = () => {
 
       {/* MOCK DASHBOARD UI */}
       <MockDashboardUI />
+
+      {/* FEATURES */}
+      <Features />
     </div>
   );
 };
