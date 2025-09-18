@@ -1,3 +1,4 @@
+import CTA from "@/components/landing/CTA";
 import Features from "@/components/landing/Features";
 import HowItWorks from "@/components/landing/HowItWorks";
 import MockDashboardUI from "@/components/landing/MockDashboardUI";
@@ -45,6 +46,9 @@ const LandingPage = () => {
 
       {/* TESTIMONIALS */}
       <Testimonials />
+
+      {/* CALL TO ACTION */}
+      <CTA />
     </div>
   );
 };
