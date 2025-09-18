@@ -6,17 +6,17 @@ import Link from "next/link";
 
 const LandingPage = () => {
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className="mx-auto max-w-7xl">
       {/* NAVBAR */}
       <Navbar />
 
       {/* HERO SECTION */}
-      <section className="my-10 relative bg-background">
-        <div className="text-center space-y-6">
+      <section className="bg-background relative my-12">
+        <div className="space-y-6 text-center">
           <h1 className="text-4xl font-semibold tracking-wide sm:text-[42px] sm:leading-[1.2]">
             Smarter Healthcare, Powered by Technology
           </h1>
-          <p className="max-w-2xl mx-auto text-muted-foreground text-sm">
+          <p className="text-muted-foreground mx-auto max-w-2xl text-sm">
             Book appointments, manage clinics, and connect with patients — all
             in one place. Whether you’re a hospital, private clinic, or patient,
             Medora makes healthcare simple.
@@ -26,7 +26,7 @@ const LandingPage = () => {
             className={buttonVariants({ size: "xl", className: "group" })}
           >
             Get Started{" "}
-            <ArrowRight className="size-4 group-hover:translate-x-1 transition-all duration-200" />
+            <ArrowRight className="size-4 transition-all duration-200 group-hover:translate-x-1" />
           </Link>
         </div>
       </section>
