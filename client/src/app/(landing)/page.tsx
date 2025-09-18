@@ -1,6 +1,7 @@
 import Features from "@/components/landing/Features";
 import HowItWorks from "@/components/landing/HowItWorks";
 import MockDashboardUI from "@/components/landing/MockDashboardUI";
+import Testimonials from "@/components/landing/Testimonials";
 import Navbar from "@/components/layout/Navbar";
 import { buttonVariants } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
@@ -41,6 +42,9 @@ const LandingPage = () => {
 
       {/* HOW IT WORKS */}
       <HowItWorks />
+
+      {/* TESTIMONIALS */}
+      <Testimonials />
     </div>
   );
 };
