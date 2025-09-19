@@ -3,6 +3,7 @@ import Features from "@/components/landing/Features";
 import HowItWorks from "@/components/landing/HowItWorks";
 import MockDashboardUI from "@/components/landing/MockDashboardUI";
 import Testimonials from "@/components/landing/Testimonials";
+import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
 import { buttonVariants } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
@@ -49,6 +50,9 @@ const LandingPage = () => {
 
       {/* CALL TO ACTION */}
       <CTA />
+
+      {/* FOOTER */}
+      <Footer />
     </div>
   );
 };
