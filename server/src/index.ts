@@ -1,9 +1,30 @@
 import express from "express";
+import authRoutes from "./routes/auth.routes";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+import { errorHandler } from "./middlewares/error.middleware";
 
+// CONFIGURATION
 const app = express();
 
-const port = process.env.PORT || 5001;
+// MIDDLEWARES
+app.use(express.json());
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
 
+// ROUTES
+app.use("/api/v1/auth", authRoutes);
+
+// ERROR HANDLER
+app.use(errorHandler);
+
+// SERVER RUNNING
+const port = process.env.PORT || 5001;
 app.listen(port, () => {
   console.log(`Server listening to the port ${port}`);
 });
