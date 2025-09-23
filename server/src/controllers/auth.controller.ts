@@ -1,7 +1,9 @@
 import { NextFunction, Request, Response } from "express";
+import passport from "passport";
+import { authModel } from "../models/auth.model";
 import { authService } from "../services/auth.service";
-import { signInSchema, signUpSchema } from "../validations/auth.validation";
 import { AppError } from "../utils/AppError";
+import { signInSchema, signUpSchema } from "../validations/auth.validation";
 
 export const authController = {
   signUp: async (req: Request, res: Response, next: NextFunction) => {
@@ -105,5 +107,41 @@ export const authController = {
     } catch (error) {
       next(error);
     }
+  },
+
+  googleStart: passport.authenticate("google", {
+    scope: ["profile", "email"],
+    session: false,
+  }),
+
+  googleCallback: async (req: Request, res: Response, next: NextFunction) => {
+    passport.authenticate(
+      "google",
+      { session: false },
+      async (err, user: any) => {
+        try {
+          if (err) {
+            return next(err);
+          }
+
+          if (!user) {
+            return res.redirect("http://localhost:3000/api/v1/auth/sign-in");
+          }
+
+          const { refreshToken } = await authModel.issueTokensForUsers(user.id);
+
+          res.cookie("refresh_token", refreshToken, {
+            httpOnly: true,
+            sameSite: "strict",
+            secure: process.env.NODE_ENV === "production",
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+          });
+
+          return res.redirect("http://localhost:3000");
+        } catch (error) {
+          next(error);
+        }
+      }
+    );
   },
 };

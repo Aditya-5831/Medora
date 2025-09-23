@@ -1,8 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import db from "../config/db";
 import { authModel } from "../models/auth.model";
-import { UserType } from "../types/UserType";
+import { GoogleAuthType, UserType } from "../types/UserType";
 import { AppError } from "../utils/AppError";
 
 const access_secret = process.env.JWT_ACCESS_SECRET!;
@@ -23,20 +22,9 @@ export const authService = {
       password: hashedPassword,
     });
 
-    const accessToken = jwt.sign({ userId: newUser.id }, access_secret, {
-      expiresIn: "15m",
-    });
-    const refreshToken = jwt.sign({ userId: newUser.id }, refresh_secret, {
-      expiresIn: "7d",
-    });
-
-    await db.refreshToken.create({
-      data: {
-        token: refreshToken,
-        userId: newUser.id,
-        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-      },
-    });
+    const { accessToken, refreshToken } = await authModel.issueTokensForUsers(
+      newUser.id
+    );
 
     return { user: newUser, accessToken, refreshToken };
   },
@@ -44,7 +32,7 @@ export const authService = {
   signIn: async (data: UserType) => {
     const user = await authModel.findByEmail(data.email);
 
-    if (!user) {
+    if (!user || !user.password) {
       throw new AppError("Invalid credentials", 401);
     }
 
@@ -57,20 +45,9 @@ export const authService = {
       throw new AppError("Invalid credentials", 401);
     }
 
-    const accessToken = jwt.sign({ userId: user.id }, access_secret, {
-      expiresIn: "15m",
-    });
-    const refreshToken = jwt.sign({ userId: user.id }, refresh_secret, {
-      expiresIn: "7d",
-    });
-
-    await db.refreshToken.create({
-      data: {
-        token: refreshToken,
-        userId: user.id,
-        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-      },
-    });
+    const { accessToken, refreshToken } = await authModel.issueTokensForUsers(
+      user.id
+    );
 
     const { password, ...safeUser } = user;
 
@@ -107,5 +84,18 @@ export const authService = {
     });
 
     return access_token;
+  },
+
+  issueTokensForUsers: async (userId: string) => {
+    const { accessToken, refreshToken } = await authModel.issueTokensForUsers(
+      userId
+    );
+
+    return { accessToken, refreshToken };
+  },
+
+  googleAuth: async (profile: GoogleAuthType) => {
+    const user = await authModel.googleAuth(profile);
+    return user;
   },
 };
