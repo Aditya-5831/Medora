@@ -9,6 +9,17 @@ import { useForm } from "react-hook-form";
 import { Button } from "../ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
+import { AxiosError } from "axios";
+import { apiRequest } from "@/lib/apiRequest";
+import { toast } from "sonner";
+import { useMutation } from "@tanstack/react-query";
+import { Loader2 } from "lucide-react";
+
+interface AuthErrorResponse {
+  error: {
+    message: string;
+  };
+}
 
 const SignInForm = () => {
   const form = useForm<SignInFormValues>({
@@ -18,10 +29,38 @@ const SignInForm = () => {
       password: "",
     },
   });
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (values: SignInFormValues) => {
+      const response = (await apiRequest.post("/auth/sign-in", values)).data;
+
+      if (response.success) {
+        toast.success(response.message);
+      }
+    },
+
+    onError: (error: AxiosError) => {
+      if (error.response) {
+        const errorResponse = error.response.data as AuthErrorResponse;
+
+        if (errorResponse.error.message === "Invalid credentials") {
+          toast.error("Invalid credentials");
+        } else {
+          toast.error("Something went wrong");
+        }
+      }
+    },
+  });
+
+  const onSubmit = (values: SignInFormValues) => {
+    mutate(values);
+    form.reset();
+  };
+
   return (
     <div className="flex w-full flex-col gap-5">
       <Form {...form}>
-        <form action="" className="space-y-5">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
           <FormField
             name="email"
             control={form.control}
@@ -47,8 +86,12 @@ const SignInForm = () => {
             )}
           />
 
-          <Button type="submit" className="w-full">
-            Sign in
+          <Button disabled={isPending} type="submit" className="w-full">
+            {isPending ? (
+              <Loader2 className="size-4 animate-spin" />
+            ) : (
+              "Sign in"
+            )}
           </Button>
         </form>
       </Form>
