@@ -1,6 +1,6 @@
 "use client";
 
-import { apiRequest } from "@/lib/apiRequest";
+import { apiRequest, setAccessToken } from "@/lib/apiRequest";
 import {
   SignUpFormSchema,
   SignUpFormValues,
@@ -36,6 +36,7 @@ const SignUpForm = () => {
       const response = (await apiRequest.post("/auth/sign-up", values)).data;
 
       if (response.success) {
+        setAccessToken(response.accessToken);
         toast.success(response.message);
       }
     },

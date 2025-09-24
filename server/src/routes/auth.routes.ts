@@ -16,9 +16,9 @@ router.post("/refresh", authController.refresh);
 router.post("/refresh", authController.logout);
 
 // GOOGLE START
-router.post("/google", authController.logout);
+router.get("/google", authController.googleStart);
 
 // GOOGLE CALLBACK
-router.post("/google/callback", authController.logout);
+router.get("/google/callback", authController.googleCallback);
 
 export default router;

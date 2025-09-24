@@ -125,7 +125,7 @@ export const authController = {
           }
 
           if (!user) {
-            return res.redirect("http://localhost:3000/api/v1/auth/sign-in");
+            return res.redirect("http://localhost:3000/sign-in");
           }
 
           const { refreshToken } = await authModel.issueTokensForUsers(user.id);
