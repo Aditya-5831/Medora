@@ -14,11 +14,10 @@ import { apiRequest, setAccessToken } from "@/lib/apiRequest";
 import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
+import { useAuthStore } from "@/stores/useAuthStore";
 
 interface AuthErrorResponse {
-  error: {
-    message: string;
-  };
+  message: string;
 }
 
 const SignInForm = () => {
@@ -30,6 +29,8 @@ const SignInForm = () => {
     },
   });
 
+  const { setUser } = useAuthStore((state) => state);
+
   const { mutate, isPending } = useMutation({
     mutationFn: async (values: SignInFormValues) => {
       const response = (await apiRequest.post("/auth/sign-in", values)).data;
@@ -37,6 +38,7 @@ const SignInForm = () => {
       if (response.success) {
         setAccessToken(response.accessToken);
         toast.success(response.message);
+        setUser(response.user);
       }
     },
 
@@ -44,7 +46,7 @@ const SignInForm = () => {
       if (error.response) {
         const errorResponse = error.response.data as AuthErrorResponse;
 
-        if (errorResponse.error.message === "Invalid credentials") {
+        if (errorResponse.message === "Invalid credentials") {
           toast.error("Invalid credentials");
         } else {
           toast.error("Something went wrong");
@@ -89,7 +91,7 @@ const SignInForm = () => {
 
           <Button disabled={isPending} type="submit" className="w-full">
             {isPending ? (
-              <Loader2 className="size-4 animate-spin" />
+              <Loader2 className="size-5 animate-spin" />
             ) : (
               "Sign in"
             )}

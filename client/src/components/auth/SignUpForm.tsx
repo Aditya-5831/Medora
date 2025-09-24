@@ -14,11 +14,10 @@ import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
+import { useAuthStore } from "@/stores/useAuthStore";
 
 interface AuthErrorResponse {
-  error: {
-    message: string;
-  };
+  message: string;
 }
 
 const SignUpForm = () => {
@@ -31,13 +30,18 @@ const SignUpForm = () => {
     },
   });
 
+  const { setUser } = useAuthStore((state) => state);
+
   const { mutate, isPending } = useMutation({
     mutationFn: async (values: SignUpFormValues) => {
       const response = (await apiRequest.post("/auth/sign-up", values)).data;
 
+      console.log(response);
+
       if (response.success) {
         setAccessToken(response.accessToken);
         toast.success(response.message);
+        setUser(response.user);
       }
     },
 
@@ -45,7 +49,7 @@ const SignUpForm = () => {
       if (error.response) {
         const errorResponse = error.response.data as AuthErrorResponse;
 
-        if (errorResponse.error.message === "User already exists") {
+        if (errorResponse.message === "User already exists") {
           toast.error("User already exists");
         } else {
           toast.error("Something went wrong");
@@ -102,7 +106,7 @@ const SignUpForm = () => {
 
           <Button disabled={isPending} type="submit" className="w-full">
             {isPending ? (
-              <Loader2 className="size-4 animate-spin" />
+              <Loader2 className="size-5 animate-spin" />
             ) : (
               "Sign up"
             )}
