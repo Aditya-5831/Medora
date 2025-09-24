@@ -3,6 +3,10 @@ import authRoutes from "./routes/auth.routes";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { errorHandler } from "./middlewares/error.middleware";
+import passport from "passport";
+
+// PASSPORT CONFIG
+import "../src/config/passport.config";
 
 // CONFIGURATION
 const app = express();
@@ -16,6 +20,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(passport.initialize());
 
 // ROUTES
 app.use("/api/v1/auth", authRoutes);

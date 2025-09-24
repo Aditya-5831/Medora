@@ -10,7 +10,7 @@ import { Button } from "../ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
 import { AxiosError } from "axios";
-import { apiRequest } from "@/lib/apiRequest";
+import { apiRequest, setAccessToken } from "@/lib/apiRequest";
 import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
@@ -35,6 +35,7 @@ const SignInForm = () => {
       const response = (await apiRequest.post("/auth/sign-in", values)).data;
 
       if (response.success) {
+        setAccessToken(response.accessToken);
         toast.success(response.message);
       }
     },

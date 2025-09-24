@@ -78,7 +78,9 @@ export const authModel = {
       where: {
         provider_providerId: { provider: "google", providerId },
       },
-      include: { user: true },
+      include: {
+        user: true,
+      },
     });
 
     if (existingAccount) {
@@ -86,7 +88,9 @@ export const authModel = {
     }
 
     let user = await db.user.findUnique({
-      where: { email: profileEmail },
+      where: {
+        email: profileEmail,
+      },
     });
 
     if (!user) {
