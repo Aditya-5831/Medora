@@ -1,9 +1,10 @@
-import express from "express";
-import authRoutes from "./routes/auth.routes";
-import cors from "cors";
 import cookieParser from "cookie-parser";
-import { errorHandler } from "./middlewares/error.middleware";
+import cors from "cors";
+import express from "express";
 import passport from "passport";
+import { errorHandler } from "./middlewares/error.middleware";
+import authRoutes from "./routes/auth.routes";
+import userRoutes from "./routes/user.routes";
 
 // PASSPORT CONFIG
 import "../src/config/passport.config";
@@ -24,6 +25,7 @@ app.use(passport.initialize());
 
 // ROUTES
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/user", userRoutes);
 
 // ERROR HANDLER
 app.use(errorHandler);
