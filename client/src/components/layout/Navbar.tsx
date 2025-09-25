@@ -69,7 +69,7 @@ const Navbar = () => {
 
       {/* BUTTONS SECTION */}
       {isLoadingUser ? (
-        <div />
+        <div className="size-9 animate-pulse rounded-full bg-gray-300" />
       ) : isAuthenticated ? (
         <UserButton />
       ) : (

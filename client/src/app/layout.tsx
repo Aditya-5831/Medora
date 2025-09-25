@@ -4,6 +4,7 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import { Toaster } from "sonner";
+import AuthProvider from "@/providers/AuthProvider";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -23,8 +24,10 @@ export default function RootLayout({
     <html lang="en" className={cn(roboto.className, "antialiased")}>
       <body>
         <ReactQueryProvider>
-          <Toaster richColors position="top-center" />
-          {children}
+          <AuthProvider>
+            <Toaster richColors position="top-center" />
+            {children}
+          </AuthProvider>
         </ReactQueryProvider>
       </body>
     </html>
