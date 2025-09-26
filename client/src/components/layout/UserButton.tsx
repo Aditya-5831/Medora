@@ -1,6 +1,7 @@
+import { apiRequest } from "@/lib/apiRequest";
 import { useAuthStore } from "@/stores/useAuthStore";
+import { useMutation } from "@tanstack/react-query";
 import { LogOutIcon } from "lucide-react";
-import { Button } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,7 +13,15 @@ import {
 import UserAvatar from "./UserAvatar";
 
 const UserButton = () => {
-  const { user } = useAuthStore((state) => state);
+  const { user, setUser } = useAuthStore((state) => state);
+
+  const { mutate: logout } = useMutation({
+    mutationFn: async () => await apiRequest.post("/auth/logout"),
+
+    onSuccess: () => {
+      setUser(null);
+    },
+  });
 
   if (!user) {
     return null;
@@ -36,7 +45,7 @@ const UserButton = () => {
           Logged in as <span>{user.name}</span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => logout()}>
           <LogOutIcon className="text-destructive mr-1 size-4" />
           <span className="text-destructive">logout</span>
         </DropdownMenuItem>

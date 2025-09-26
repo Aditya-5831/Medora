@@ -38,7 +38,7 @@ const SignInForm = () => {
       if (response.success) {
         setAccessToken(response.accessToken);
         toast.success(response.message);
-        setUser(response.user);
+        setUser(response.safeUser);
       }
     },
 
