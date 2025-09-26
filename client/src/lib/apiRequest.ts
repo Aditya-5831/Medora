@@ -42,7 +42,6 @@ apiRequest.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   if (accessToken) {
     config.headers.set("Authorization", `Bearer ${accessToken}`);
   }
-
   return config;
 });
 

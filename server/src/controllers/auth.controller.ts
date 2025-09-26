@@ -97,12 +97,12 @@ export const authController = {
 
   refresh: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const access_token = await authService.refresh(req.cookies.refresh_token);
+      const accessToken = await authService.refresh(req.cookies.refresh_token);
 
       return res.status(200).json({
         success: true,
         message: "Token refeshed successfully",
-        access_token,
+        accessToken,
       });
     } catch (error) {
       next(error);
@@ -142,6 +142,6 @@ export const authController = {
           next(error);
         }
       }
-    );
+    )(req, res, next);
   },
 };

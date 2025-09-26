@@ -6,11 +6,9 @@ import { useQuery } from "@tanstack/react-query";
 import { ReactNode, useEffect } from "react";
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const { setIsLoadingUser, isLoadingUser, setUser } = useAuthStore(
-    (state) => state,
-  );
+  const { setIsLoadingUser, setUser } = useAuthStore((state) => state);
 
-  const { data: user } = useQuery({
+  const { data: user, isLoading } = useQuery({
     queryKey: ["current_user"],
     queryFn: async () => {
       const { data } = await apiRequest.get("/user/me");
@@ -21,12 +19,12 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   });
 
   useEffect(() => {
-    setIsLoadingUser(isLoadingUser);
+    setIsLoadingUser(isLoading);
 
-    if (isLoadingUser) {
+    if (!isLoading) {
       setUser(user ?? null);
     }
-  }, [user, setUser, isLoadingUser, setIsLoadingUser]);
+  }, [user, setUser, isLoading, setIsLoadingUser]);
 
   return <>{children}</>;
 };

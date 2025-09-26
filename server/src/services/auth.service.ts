@@ -79,11 +79,11 @@ export const authService = {
       userId: string;
     };
 
-    const access_token = jwt.sign({ userId: payload.userId }, access_secret, {
+    const accessToken = jwt.sign({ userId: payload.userId }, access_secret, {
       expiresIn: "15m",
     });
 
-    return access_token;
+    return accessToken;
   },
 
   issueTokensForUsers: async (userId: string) => {

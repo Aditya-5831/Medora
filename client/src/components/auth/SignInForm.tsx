@@ -1,20 +1,20 @@
 "use client";
 
+import { apiRequest, setAccessToken } from "@/lib/apiRequest";
+import { useAuthStore } from "@/stores/useAuthStore";
 import {
   SignInFormSchema,
   SignInFormValues,
 } from "@/validations/auth.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
-import { AxiosError } from "axios";
-import { apiRequest, setAccessToken } from "@/lib/apiRequest";
-import { toast } from "sonner";
-import { useMutation } from "@tanstack/react-query";
-import { Loader2 } from "lucide-react";
-import { useAuthStore } from "@/stores/useAuthStore";
 
 interface AuthErrorResponse {
   message: string;
@@ -42,6 +42,10 @@ const SignInForm = () => {
       }
     },
 
+    onSuccess: () => {
+      form.reset();
+    },
+
     onError: (error: AxiosError) => {
       if (error.response) {
         const errorResponse = error.response.data as AuthErrorResponse;
@@ -57,7 +61,6 @@ const SignInForm = () => {
 
   const onSubmit = (values: SignInFormValues) => {
     mutate(values);
-    form.reset();
   };
 
   return (
@@ -71,7 +74,11 @@ const SignInForm = () => {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder="Jason@example.com" />
+                  <Input
+                    disabled={isPending}
+                    {...field}
+                    placeholder="Jason@example.com"
+                  />
                 </FormControl>
               </FormItem>
             )}
@@ -83,7 +90,11 @@ const SignInForm = () => {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder="********" />
+                  <Input
+                    disabled={isPending}
+                    {...field}
+                    placeholder="********"
+                  />
                 </FormControl>
               </FormItem>
             )}
