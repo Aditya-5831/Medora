@@ -33,8 +33,6 @@ export const authorize = (req: Request, res: Response, next: NextFunction) => {
 
     next();
   } catch (error: Error | any) {
-    return res
-      .status(500)
-      .json({ message: "Unauthorized", error: error.message });
+    next(error);
   }
 };

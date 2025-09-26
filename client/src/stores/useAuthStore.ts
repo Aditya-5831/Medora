@@ -20,7 +20,7 @@ export const useAuthStore = create<AuthStoreProps>()(
     (set) => ({
       user: null,
       isAuthenticated: false,
-      isLoadingUser: false,
+      isLoadingUser: true,
 
       setUser: (user) => set({ user, isAuthenticated: !!user }),
 

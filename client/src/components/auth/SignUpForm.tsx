@@ -1,6 +1,7 @@
 "use client";
 
 import { apiRequest, setAccessToken } from "@/lib/apiRequest";
+import { useAuthStore } from "@/stores/useAuthStore";
 import {
   SignUpFormSchema,
   SignUpFormValues,
@@ -14,7 +15,6 @@ import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
-import { useAuthStore } from "@/stores/useAuthStore";
 
 interface AuthErrorResponse {
   message: string;
@@ -43,6 +43,10 @@ const SignUpForm = () => {
       }
     },
 
+    onSuccess: () => {
+      form.reset();
+    },
+
     onError: (error: AxiosError) => {
       if (error.response) {
         const errorResponse = error.response.data as AuthErrorResponse;
@@ -58,7 +62,6 @@ const SignUpForm = () => {
 
   const onSubmit = (values: SignUpFormValues) => {
     mutate(values);
-    form.reset();
   };
 
   return (
@@ -72,7 +75,11 @@ const SignUpForm = () => {
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder="Jason Watson" />
+                  <Input
+                    disabled={isPending}
+                    {...field}
+                    placeholder="Jason Watson"
+                  />
                 </FormControl>
               </FormItem>
             )}
@@ -84,7 +91,11 @@ const SignUpForm = () => {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder="Jason@example.com" />
+                  <Input
+                    disabled={isPending}
+                    {...field}
+                    placeholder="Jason@example.com"
+                  />
                 </FormControl>
               </FormItem>
             )}
@@ -96,7 +107,11 @@ const SignUpForm = () => {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder="********" />
+                  <Input
+                    disabled={isPending}
+                    {...field}
+                    placeholder="********"
+                  />
                 </FormControl>
               </FormItem>
             )}
