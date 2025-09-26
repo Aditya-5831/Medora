@@ -66,6 +66,7 @@ apiRequest.interceptors.response.use(
           refreshQueue.push({
             resolve: (token: string) => {
               original.headers.Authorization = `Bearer ${token}`;
+              resolve(apiRequest(original));
             },
             reject,
           });

@@ -39,7 +39,11 @@ const NAV_LINKS = [
 
 const Navbar = () => {
   const pathname = usePathname();
-  const { isAuthenticated, isLoadingUser } = useAuthStore((state) => state);
+  const { isAuthenticated, isLoadingUser, user } = useAuthStore(
+    (state) => state,
+  );
+
+  console.log(user);
 
   return (
     <nav className="flex h-20 w-full items-center justify-between px-6 shadow-sm md:px-12">

@@ -36,8 +36,6 @@ const SignUpForm = () => {
     mutationFn: async (values: SignUpFormValues) => {
       const response = (await apiRequest.post("/auth/sign-up", values)).data;
 
-      console.log(response);
-
       if (response.success) {
         setAccessToken(response.accessToken);
         toast.success(response.message);

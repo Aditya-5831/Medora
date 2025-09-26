@@ -13,7 +13,7 @@ router.post("/sign-in", authController.signIn);
 router.post("/refresh", authController.refresh);
 
 // LOGOUT
-router.post("/refresh", authController.logout);
+router.post("/logout", authController.logout);
 
 // GOOGLE START
 router.get("/google", authController.googleStart);

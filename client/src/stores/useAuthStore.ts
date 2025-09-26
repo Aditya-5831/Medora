@@ -6,7 +6,7 @@ interface AuthStoreProps {
   isAuthenticated: boolean;
   isLoadingUser: boolean;
   setUser: (user: User | null) => void;
-  setIsLoadingUser: (isLoading: boolean) => void;
+  setIsLoadingUser: (loading: boolean) => void;
 }
 
 interface User {

@@ -32,7 +32,7 @@ export const authController = {
 
       return res.status(201).json({
         success: true,
-        messge: "User created successfully",
+        message: "User created successfully",
         user,
         accessToken,
       });
@@ -67,7 +67,7 @@ export const authController = {
 
       return res.status(200).json({
         success: true,
-        messge: "Logging In successfully",
+        message: "Logged In successfully",
         safeUser,
         accessToken,
       });
