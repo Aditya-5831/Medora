@@ -3,7 +3,7 @@
 import { apiRequest, setAccessToken } from "@/lib/apiRequest";
 import { useAuthStore } from "@/stores/useAuthStore";
 import {
-  SignUpFormSchema,
+  signUpFormSchema,
   SignUpFormValues,
 } from "@/validations/auth.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,7 +13,14 @@ import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
 import { Input } from "../ui/input";
 
 interface AuthErrorResponse {
@@ -22,7 +29,7 @@ interface AuthErrorResponse {
 
 const SignUpForm = () => {
   const form = useForm<SignUpFormValues>({
-    resolver: zodResolver(SignUpFormSchema),
+    resolver: zodResolver(signUpFormSchema),
     defaultValues: {
       name: "",
       email: "",
@@ -81,6 +88,7 @@ const SignUpForm = () => {
                     placeholder="Jason Watson"
                   />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -97,6 +105,7 @@ const SignUpForm = () => {
                     placeholder="Jason@example.com"
                   />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -113,6 +122,7 @@ const SignUpForm = () => {
                     placeholder="********"
                   />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
