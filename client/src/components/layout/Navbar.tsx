@@ -92,7 +92,7 @@ const Navbar = () => {
           <div className="h-8 w-px bg-gray-200" />
 
           <Link
-            href={"/sign-up"}
+            href={"/sign-in"}
             className={buttonVariants({
               size: "sm",
               className: "text-xs",

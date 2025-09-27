@@ -7,6 +7,8 @@ interface AuthStoreProps {
   isLoadingUser: boolean;
   setUser: (user: User | null) => void;
   setIsLoadingUser: (loading: boolean) => void;
+  showPasswordInput: boolean;
+  setShowPasswordInput: (value: boolean) => void;
 }
 
 interface User {
@@ -21,10 +23,13 @@ export const useAuthStore = create<AuthStoreProps>()(
       user: null,
       isAuthenticated: false,
       isLoadingUser: true,
+      showPasswordInput: false,
 
       setUser: (user) => set({ user, isAuthenticated: !!user }),
 
       setIsLoadingUser: (loading) => set({ isLoadingUser: loading }),
+
+      setShowPasswordInput: (value) => set({ showPasswordInput: value }),
     }),
     { name: "user" },
   ),
